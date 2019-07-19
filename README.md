@@ -6,7 +6,7 @@ A simple lighttpd image that doesn't use an entrypoint script.
 
 ```docker
 docker build -t pdok/lighttpd .
-docker run -p 80:80 --name lighttpd-example -v `pwd`/config:/srv/lighttpd/config pdok/lighttpd
+docker run -p 80:80 --name lighttpd-example -v `pwd`/config:/srv/lighttpd pdok/lighttpd
 
 docker stop lighttpd-example
 docker rm lighttpd-example
@@ -25,7 +25,7 @@ It will start a small container containing lighttpd.
 ### Build
 
 ```docker
-docker build -t pdok/mapproxy .
+docker build -t pdok/lighttpd .
 ```
 
 ### Run
@@ -33,7 +33,7 @@ docker build -t pdok/mapproxy .
 This image can be run straight from the commandline. A volume needs to be mounted on the container directory /srv/lighttpd/config. The mounted volume needs to contain a `lighttpd.conf` file.
 
 ```docker
-docker run -p 80:80 --name lighttpd-example -v `pwd`/config:/srv/lighttpd/config pdok/lighttpd
+docker run -p 80:80 --name lighttpd-example -v `pwd`/config:/srv/lighttpd pdok/lighttpd
 ```
 
 Running the example above will create a service on the url <http://localhost/>
