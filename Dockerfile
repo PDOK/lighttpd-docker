@@ -19,4 +19,4 @@ ENV IDLE_TIMEOUT 20
 
 EXPOSE 80
 
-CMD ["lighttpd", "-D", "-f", "/srv/lighttpd/config/lighttpd.conf"]
+CMD ["lighttpd", "-D", "-f", "/srv/lighttpd/lighttpd.conf"]
