@@ -1,15 +1,15 @@
-FROM alpine:3.10
+FROM debian:buster-slim
 LABEL maintainer="PDOK dev <pdok@kadaster.nl>"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ Europe/Amsterdam
 
-ENV LIGHTTPD_VERSION=1.4.54-r0
+ENV LIGHTTPD_VERSION=1.4.53-4
 
-RUN apk add --update --no-cache \
+RUN apt-get -y update && \
+    apt-get install -y --no-install-recommends \
 	lighttpd=${LIGHTTPD_VERSION} \
-	lighttpd-mod_auth \
-  && rm -rf /var/cache/apk/*
+  && rm -rf /var/lib/apt/lists/*
 
 ENV DEBUG 0
 ENV MIN_PROCS 1
