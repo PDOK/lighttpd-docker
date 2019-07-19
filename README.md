@@ -1,5 +1,8 @@
 # lighttpd-docker
 
+![GitHub release](https://img.shields.io/github/release/PDOK/lighttpd-docker.svg)
+![Docker Pulls](https://img.shields.io/docker/pulls/pdok/lighttpd.svg)
+
 A simple lighttpd image that doesn't use an entrypoint script.
 
 ## TL;DR
