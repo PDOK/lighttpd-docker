@@ -1,6 +1,6 @@
 # lighttpd-docker
 
-![GitHub license](https://img.shields.io/github/license/PDOK/lighttpd-docker.svg)
+![GitHub license](https://img.shields.io/github/license/PDOK/lighttpd-docker)
 ![GitHub release](https://img.shields.io/github/release/PDOK/lighttpd-docker.svg)
 ![Docker Pulls](https://img.shields.io/docker/pulls/pdok/lighttpd.svg)
 
