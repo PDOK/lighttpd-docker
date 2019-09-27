@@ -9,6 +9,7 @@ ENV LIGHTTPD_VERSION=1.4.53-4
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends \
 	lighttpd=${LIGHTTPD_VERSION} \
+  lighttpd-mod-magnet=${LIGHTTPD_VERSION} \
   && rm -rf /var/lib/apt/lists/*
 
 ENV DEBUG 0
