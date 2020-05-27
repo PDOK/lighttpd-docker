@@ -16,7 +16,7 @@ RUN apt-get -y update && \
     pkg-config \
     libtool \
     m4 \
-	git \
+    git \
     libpcre3-dev \
     zlib1g-dev \
     libbz2-dev \
