@@ -17,6 +17,7 @@ RUN apt-get -y update && \
     libtool \
     m4 \
     git \
+    libssl-dev \
     libpcre3-dev \
     zlib1g-dev \
     libbz2-dev \
@@ -25,7 +26,7 @@ RUN apt-get -y update && \
 
 RUN git clone --single-branch -b ${LIGHTTPD_VERSION} https://git.lighttpd.net/lighttpd/lighttpd1.4/ /usr/local/src/${LIGHTTPD_VERSION}
 
-RUN cd /usr/local/src/${LIGHTTPD_VERSION} && ./autogen.sh && ./configure --with-lua \
+RUN cd /usr/local/src/${LIGHTTPD_VERSION} && ./autogen.sh && ./configure --with-lua --with-openssl \
    --disable-dependency-tracking && \
     make && \
     make install
@@ -34,6 +35,11 @@ FROM debian:buster-slim as service
 
 COPY --from=builder /usr/local/sbin /usr/local/sbin
 COPY --from=builder /usr/local/lib /usr/local/lib
+
+RUN apt-get -y update && \
+    apt-get install -y --no-install-recommends \
+    ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
 
 ENV DEBUG 0
 ENV MIN_PROCS 1
