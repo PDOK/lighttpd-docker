@@ -1,4 +1,4 @@
-FROM debian:buster-slim as builder
+FROM debian:bullseye-slim as builder
 LABEL maintainer="PDOK dev <pdok@kadaster.nl>"
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -31,7 +31,7 @@ RUN cd /usr/local/src/${LIGHTTPD_VERSION} && ./autogen.sh && ./configure --with-
     make && \
     make install
 
-FROM debian:buster-slim as service
+FROM debian:bullseye-slim as service
 
 COPY --from=builder /usr/local/sbin /usr/local/sbin
 COPY --from=builder /usr/local/lib /usr/local/lib
