@@ -1,8 +1,8 @@
 # lighttpd-docker
 
-![GitHub license](https://img.shields.io/github/license/PDOK/lighttpd-docker)
-![GitHub release](https://img.shields.io/github/release/PDOK/lighttpd-docker.svg)
-![Docker Pulls](https://img.shields.io/docker/pulls/pdok/lighttpd.svg)
+[![GitHub license](https://img.shields.io/github/license/PDOK/lighttpd-docker)](https://github.com/PDOK/lighttpd-docker/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/PDOK/lighttpd-docker.svg)](https://github.com/PDOK/lighttpd-docker/releases)
+[![Docker Pulls](https://img.shields.io/docker/pulls/pdok/lighttpd.svg)](https://hub.docker.com/r/pdok/lighttpd)
 
 A simple [lighttpd](https://www.lighttpd.net/) image that doesn't use an entrypoint script.
 
@@ -10,10 +10,9 @@ A simple [lighttpd](https://www.lighttpd.net/) image that doesn't use an entrypo
 
 ```docker
 docker build -t pdok/lighttpd .
-docker run -p 80:80 --name lighttpd-example -v `pwd`/config:/srv/lighttpd pdok/lighttpd
+docker run --rm -p 80:80 --name lighttpd-example -v `pwd`/config:/srv/lighttpd pdok/lighttpd
 
 docker stop lighttpd-example
-docker rm lighttpd-example
 ```
 
 ## Introduction
