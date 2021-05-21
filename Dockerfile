@@ -1,10 +1,9 @@
 FROM debian:bullseye-slim as builder
-LABEL maintainer="PDOK dev <pdok@kadaster.nl>"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ Europe/Amsterdam
 
-ENV LIGHTTPD_VERSION=lighttpd-1.4.55
+ENV LIGHTTPD_VERSION=lighttpd-1.4.59
 
 # https://redmine.lighttpd.net/projects/lighttpd/wiki/DevelGit
 RUN apt-get -y update && \
