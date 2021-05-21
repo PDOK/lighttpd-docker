@@ -36,7 +36,7 @@ docker build -t pdok/lighttpd .
 This image can be run straight from the commandline. A volume needs to be mounted on the container directory /srv/lighttpd/config. The mounted volume needs to contain a `lighttpd.conf` file.
 
 ```docker
-docker run -p 80:80 --name lighttpd-example -v `pwd`/config:/srv/lighttpd pdok/lighttpd
+docker run --rm -p 80:80 --name lighttpd-example -v `pwd`/config:/srv/lighttpd pdok/lighttpd
 ```
 
 Running the example above will create a service on the url <http://localhost/>
@@ -52,3 +52,13 @@ IDLE_TIMEOUT
 ```
 
 The ENV variables have a default value set in the Dockerfile.
+
+## Misc
+
+### How to Contribute
+
+Make a pull request...
+
+### Contact
+
+Contacting the maintainers can be done through the issue tracker.
