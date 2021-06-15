@@ -1,9 +1,9 @@
-FROM debian:bullseye-slim as builder
+FROM debian:buster-slim as builder
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ Europe/Amsterdam
 
-ENV LIGHTTPD_VERSION=1.4.59
+ENV LIGHTTPD_VERSION=1.4.53
 
 # https://redmine.lighttpd.net/projects/lighttpd/wiki/DevelGit
 RUN apt-get -y update && \
@@ -20,7 +20,7 @@ RUN apt-get -y update && \
     libpcre3-dev \
     zlib1g-dev \
     libbz2-dev \
-    liblua5.4-dev \
+    liblua5.2-dev \
   && rm -rf /var/lib/apt/lists/*
 
 RUN git clone --single-branch -b lighttpd-${LIGHTTPD_VERSION} https://git.lighttpd.net/lighttpd/lighttpd1.4/ /usr/local/src/lighttpd-${LIGHTTPD_VERSION}
@@ -30,9 +30,9 @@ RUN cd /usr/local/src/lighttpd-${LIGHTTPD_VERSION} && ./autogen.sh && ./configur
     make && \
     make install
 
-FROM debian:bullseye-slim as service
+FROM debian:buster-slim as service
 
-ENV LIGHTTPD_MOD_MAGNET_VERSION=1.4.59-1
+ENV LIGHTTPD_MOD_MAGNET_VERSION=1.4.53-4+deb10u1
 
 COPY --from=builder /usr/local/sbin /usr/local/sbin
 COPY --from=builder /usr/local/lib /usr/local/lib
@@ -40,7 +40,7 @@ COPY --from=builder /usr/local/lib /usr/local/lib
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends \
     ca-certificates \
-    liblua5.4-0 \
+    liblua5.2-0 \
     lighttpd-mod-magnet=${LIGHTTPD_MOD_MAGNET_VERSION} \
   && rm -rf /var/lib/apt/lists/*
 
