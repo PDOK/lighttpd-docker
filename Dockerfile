@@ -2,7 +2,7 @@ FROM debian:buster-slim as builder
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ Europe/Amsterdam 
-ENV LIGHTTPD_VERSION=1.4.53
+ENV LIGHTTPD_VERSION=1.4.63
 
 # https://redmine.lighttpd.net/projects/lighttpd/wiki/DevelGit
 RUN apt-get -y update && \
