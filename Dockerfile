@@ -1,8 +1,7 @@
 FROM debian:buster-slim as builder
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV TZ Europe/Amsterdam
-
+ENV TZ Europe/Amsterdam 
 ENV LIGHTTPD_VERSION=1.4.53
 
 # https://redmine.lighttpd.net/projects/lighttpd/wiki/DevelGit
@@ -40,6 +39,7 @@ COPY --from=builder /usr/local/lib /usr/local/lib
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends \
     ca-certificates \
+    wget \
     liblua5.2-0 \
     lighttpd-mod-magnet=${LIGHTTPD_MOD_MAGNET_VERSION} \
   && rm -rf /var/lib/apt/lists/*
