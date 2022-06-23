@@ -18,9 +18,7 @@ docker stop lighttpd-example
 
 This project aims to fulfill the need in creating a [lighttpd](https://www.lighttpd.net/) container that is deployable on a scalable infrastructure, like [Kubernetes](https://kubernetes.io/). This means that this image is based on a lightweight base-image.
 
-
 The image comes with a default, overridable [`lighttdp.conf`](config/lighttpd.conf) file that is specifically aimed at serving static files for a web application.
-
 
 ## What will it do
 
@@ -56,7 +54,6 @@ The environment variables that can be set are the following:
 - `IDLE_TIMEOUT`
 
 The environment variables have a default value set in the Dockerfile.
-
 
 ### Use image in another Docker image
 
