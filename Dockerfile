@@ -1,45 +1,61 @@
+# using tag debian:buster-slim to automatically receive updates on buster
+# assuming debian:buster-slim is stable enough, so no breaking changes
+
 FROM debian:buster-slim as builder
+LABEL maintainer="PDOK dev <https://github.com/PDOK/lighttpd-docker/issues>"
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV TZ Europe/Amsterdam 
-ENV LIGHTTPD_VERSION=1.4.63
+ENV TZ Europe/Amsterdam
+ENV LIGHTTPD_VERSION=1.4.65
 
 # https://redmine.lighttpd.net/projects/lighttpd/wiki/DevelGit
-RUN apt-get -y update && \
-    apt-get install -y --no-install-recommends \
-    ca-certificates \
-    make \
-    autoconf \
-    automake \
-    pkg-config \
-    libtool \
-    m4 \
-    git \
-    libssl-dev \
-    libpcre3-dev \
-    zlib1g-dev \
-    libbz2-dev \
-    liblua5.2-dev \
-  && rm -rf /var/lib/apt/lists/*
+RUN apt-get -y update \
+    && apt-get install -y --no-install-recommends \
+      autoconf \
+      automake \
+      ca-certificates \
+      git \
+      libbz2-dev \
+      liblua5.2-dev \
+      libpcre2-dev \
+      libssl-dev \
+      libtool \
+      m4 \
+      make \
+      pkg-config \
+      zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN git clone --single-branch -b lighttpd-${LIGHTTPD_VERSION} https://git.lighttpd.net/lighttpd/lighttpd1.4/ /usr/local/src/lighttpd-${LIGHTTPD_VERSION}
 
-RUN cd /usr/local/src/lighttpd-${LIGHTTPD_VERSION} && ./autogen.sh && ./configure --with-lua --with-openssl \
-   --disable-dependency-tracking && \
-    make && \
-    make install
+RUN cd /usr/local/src/lighttpd-${LIGHTTPD_VERSION} \
+    && ./autogen.sh \
+    && ./configure \
+      --with-lua \
+      --with-openssl \
+      --disable-dependency-tracking \
+    && make \
+    && make install
 
 FROM debian:buster-slim as service
+LABEL maintainer="PDOK dev <https://github.com/PDOK/lighttpd-docker/issues>"
+
+RUN useradd --no-log-init -U -r www
 
 COPY --from=builder /usr/local/sbin /usr/local/sbin
 COPY --from=builder /usr/local/lib /usr/local/lib
 
-RUN apt-get -y update && \
-    apt-get install -y --no-install-recommends \
-    ca-certificates \
-    wget \
-    liblua5.2-0 \
-  && rm -rf /var/lib/apt/lists/*
+COPY /config/lighttpd.conf /srv/lighttpd/lighttpd.conf
+COPY /www/index.html /var/www/index.html
+
+RUN apt-get -y update \
+    && apt-get install -y --no-install-recommends \
+      ca-certificates \
+      liblua5.2-0 \
+      wget \
+    && rm -rf /var/lib/apt/lists/*
+
+USER www
 
 ENV DEBUG 0
 ENV MIN_PROCS 1
@@ -48,5 +64,4 @@ ENV MAX_LOAD_PER_PROC 4
 ENV IDLE_TIMEOUT 20
 
 EXPOSE 80
-
 CMD ["lighttpd", "-D", "-f", "/srv/lighttpd/lighttpd.conf"]
