@@ -10,7 +10,7 @@ A simple [lighttpd](https://www.lighttpd.net/) image that doesn't use an entrypo
 
 ```docker
 docker build -t pdok/lighttpd .
-docker run --rm -v `pwd`/www/:/var/www -p 80:80 --name lighttpd-example pdok/lighttpd
+docker run --rm -d -v `pwd`/www/:/var/www -p 80:80 --name lighttpd-example pdok/lighttpd
 docker stop lighttpd-example
 ```
 
