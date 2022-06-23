@@ -2,6 +2,7 @@
 # assuming debian:buster-slim is stable enough, so no breaking changes
 
 FROM debian:buster-slim as builder
+LABEL maintainer="PDOK dev <https://github.com/PDOK/lighttpd-docker/issues>"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ Europe/Amsterdam
@@ -37,6 +38,7 @@ RUN cd /usr/local/src/lighttpd-${LIGHTTPD_VERSION} \
     && make install
 
 FROM debian:buster-slim as service
+LABEL maintainer="PDOK dev <https://github.com/PDOK/lighttpd-docker/issues>"
 
 RUN useradd --no-log-init -U -r www
 
