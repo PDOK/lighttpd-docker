@@ -73,3 +73,13 @@ EOF
 docker build -t pdok/lighttpd-test .
 docker run -p 80:80 pdok/lighttpd-test
 ```
+
+## Misc
+
+### How to Contribute
+
+Make a pull request...
+
+### Contact
+
+Contacting the maintainers can be done through the issue tracker.
