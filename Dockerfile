@@ -10,32 +10,32 @@ ENV LIGHTTPD_VERSION=1.4.65
 
 # https://redmine.lighttpd.net/projects/lighttpd/wiki/DevelGit
 RUN apt-get -y update \
-    && apt-get install -y --no-install-recommends \
-      autoconf \
-      automake \
-      ca-certificates \
-      git \
-      libbz2-dev \
-      liblua5.2-dev \
-      libpcre2-dev \
-      libssl-dev \
-      libtool \
-      m4 \
-      make \
-      pkg-config \
-      zlib1g-dev \
-    && rm -rf /var/lib/apt/lists/*
+  && apt-get install -y --no-install-recommends \
+  autoconf \
+  automake \
+  ca-certificates \
+  git \
+  libbz2-dev \
+  liblua5.2-dev \
+  libpcre2-dev \
+  libssl-dev \
+  libtool \
+  m4 \
+  make \
+  pkg-config \
+  zlib1g-dev \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN git clone --single-branch -b lighttpd-${LIGHTTPD_VERSION} https://git.lighttpd.net/lighttpd/lighttpd1.4/ /usr/local/src/lighttpd-${LIGHTTPD_VERSION}
 
 RUN cd /usr/local/src/lighttpd-${LIGHTTPD_VERSION} \
-    && ./autogen.sh \
-    && ./configure \
-      --with-lua \
-      --with-openssl \
-      --disable-dependency-tracking \
-    && make \
-    && make install
+  && ./autogen.sh \
+  && ./configure \
+  --with-lua \
+  --with-openssl \
+  --disable-dependency-tracking \
+  && make \
+  && make install
 
 FROM debian:buster-slim as service
 LABEL maintainer="PDOK dev <https://github.com/PDOK/lighttpd-docker/issues>"
@@ -49,11 +49,15 @@ COPY /config/lighttpd.conf /srv/lighttpd/lighttpd.conf
 COPY /www/index.html /var/www/index.html
 
 RUN apt-get -y update \
-    && apt-get install -y --no-install-recommends \
-      ca-certificates \
-      liblua5.2-0 \
-      wget \
-    && rm -rf /var/lib/apt/lists/*
+  && apt-get install -y --no-install-recommends \
+  ca-certificates \
+  libcap2-bin \
+  liblua5.2-0 \
+  wget \
+  && rm -rf /var/lib/apt/lists/*
+
+# allow non root user to bind to port 80 with lighttpd binary
+RUN setcap 'cap_net_bind_service=+ep' /usr/local/sbin/lighttpd
 
 USER www
 
