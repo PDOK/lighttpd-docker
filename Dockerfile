@@ -9,6 +9,7 @@ ENV TZ Europe/Amsterdam
 ENV LIGHTTPD_VERSION=1.4.65
 
 # https://redmine.lighttpd.net/projects/lighttpd/wiki/DevelGit
+# hadolint ignore=DL3008
 RUN apt-get -y update \
   && apt-get install -y --no-install-recommends \
   autoconf \
@@ -28,8 +29,9 @@ RUN apt-get -y update \
 
 RUN git clone --single-branch -b lighttpd-${LIGHTTPD_VERSION} https://git.lighttpd.net/lighttpd/lighttpd1.4/ /usr/local/src/lighttpd-${LIGHTTPD_VERSION}
 
-RUN cd /usr/local/src/lighttpd-${LIGHTTPD_VERSION} \
-  && ./autogen.sh \
+WORKDIR /usr/local/src/lighttpd-${LIGHTTPD_VERSION}
+
+RUN ./autogen.sh \
   && ./configure \
   --with-lua \
   --with-openssl \
@@ -48,6 +50,7 @@ COPY --from=builder /usr/local/lib /usr/local/lib
 COPY /config/lighttpd.conf /srv/lighttpd/lighttpd.conf
 COPY /www/index.html /var/www/index.html
 
+# hadolint ignore=DL3008
 RUN apt-get -y update \
   && apt-get install -y --no-install-recommends \
   ca-certificates \

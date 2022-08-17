@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+export DOCKER_IMAGE=hadolint/hadolint:v2.9.2
+
+print_message() {
+    padding_char=">"
+    message=$1
+    indent_level="${2:-1}"
+    level=${3:-NOCOLOR}
+    prepend_newline=${4:-false}
+    case "$level" in
+    "INFO")
+        color='\033[0;32m'
+        ;;
+    "WARNING")
+        color='\033[0;33m'
+        ;;
+    "ERROR")
+        color='\033[0;31m'
+        ;;
+    *)
+        color='\033[0;37m'
+        ;;
+    esac
+    if [[ $prepend_newline == true ]]; then echo ""; fi
+    printf "${color}%s %s\n" $(printf "${padding_char}%.0s" $(seq 1 "$indent_level")) "$message"
+}
+
+run_hadolint() {
+    docker run --rm -i $DOCKER_IMAGE < Dockerfile  
+}
+
+# Check if files with .yml extension are added, if so reject commit.
+run_yaml_ext_check() {
+    files=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+    if grep -E "Dockerfile" <<<"$files" >/dev/null; then
+        print_message "pre-commit - running Dockerfile linting" 1 "NOCOLOR" true
+        run_hadolint
+        if [[ $? -eq 1 ]];then
+            exit 1
+        fi
+    fi
+    print_message "OK" 2 "INFO" false
+}
+
+run_yaml_ext_check
+echo "" # empty line to seperate pre-commit output from regular git output
+exit 0
