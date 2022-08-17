@@ -32,7 +32,7 @@ It will start a small container containing lighttpd.
 docker build -t pdok/lighttpd .
 ```
 
-### Enable Dockerfile pre-commit Hook
+### Enable Dockerfile inting pre-commit hook
 
 Run the following from the root of the repository to enable Dockerfile linting with [hadolint](https://github.com/hadolint/hadolint):
 
@@ -40,7 +40,7 @@ Run the following from the root of the repository to enable Dockerfile linting w
 git config --local include.path ../.gitconfig
 ```
 
-Succesfull Dockerfile linting is also a requirement for merging a pull requests to master, which is enforce with a Github action.
+Succesfull Dockerfile linting is a requirement for merging pull requests to master, which is enforced with the [Dockerfile Lint Github action](https://github.com/PDOK/lighttpd-docker/blob/master/.github/workflows/dockerfile-lint.yaml).
 
 ### Run
 
