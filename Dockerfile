@@ -62,6 +62,9 @@ RUN apt-get -y update \
 # allow non root user to bind to port 80 with lighttpd binary
 RUN setcap 'cap_net_bind_service=+ep' /usr/local/sbin/lighttpd
 
+RUN mkdir -p /var/cache/lighttpd/compress && \
+  chown -R www:www /var/cache/lighttpd/compress
+
 USER www
 
 ENV DEBUG 0
