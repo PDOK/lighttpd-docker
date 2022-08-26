@@ -19,7 +19,13 @@ docker stop lighttpd-example
 
 This project aims to fulfill the need in creating a [lighttpd](https://www.lighttpd.net/) container that is deployable on a scalable infrastructure, like [Kubernetes](https://kubernetes.io/). This means that this image is based on a lightweight base-image.
 
-The image comes with a default, overridable [`lighttdp.conf`](config/lighttpd.conf) file that is specifically aimed at serving static files for a web application.
+The image comes with a default, overridable [`lighttdp.conf`](config/lighttpd.conf) file that is specifically aimed at serving static files for a web application. The default configuration comes with:
+
+- `mod_expire`: Sets Cache-Control headers on files with hashed filenames like `index.561ecd9f.css`
+- `mod_deflate`: Output compression on html, text, css, javascript and xml files, the compressed files are stored in a cache directory
+
+When running this image on Kubernetes and serving out very large files that will be compressed, ensure that the cache directory has it's own volume mount. For most webapps this will not be necessary. 
+
 
 ## What will it do
 
