@@ -40,7 +40,9 @@ Run the following from the root of the repository to enable Dockerfile linting w
 git config --local include.path ../.gitconfig
 ```
 
-Succesfull Dockerfile linting is a requirement for merging pull requests to master, which is enforced with the [Dockerfile Lint Github action](https://github.com/PDOK/lighttpd-docker/blob/master/.github/workflows/dockerfile-lint.yaml).
+Successful Dockerfile linting is a requirement for merging pull requests into
+master, which is enforced with the [Dockerfile Lint Github action](
+https://github.com/PDOK/lighttpd-docker/blob/master/.github/workflows/dockerfile-lint.yaml).
 
 ### Run
 
