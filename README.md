@@ -32,7 +32,7 @@ It will start a small container containing lighttpd.
 docker build -t pdok/lighttpd .
 ```
 
-### Enable Dockerfile inting pre-commit hook
+### Enable Dockerfile linting pre-commit hook
 
 Run the following from the root of the repository to enable Dockerfile linting with [hadolint](https://github.com/hadolint/hadolint):
 
