@@ -74,4 +74,5 @@ ENV MAX_LOAD_PER_PROC 4
 ENV IDLE_TIMEOUT 20
 
 EXPOSE 80
+STOPSIGNAL SIGINT
 CMD ["lighttpd", "-D", "-f", "/srv/lighttpd/lighttpd.conf"]
