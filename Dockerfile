@@ -42,7 +42,6 @@ RUN ./autogen.sh \
 FROM debian:buster-slim as service
 LABEL maintainer="PDOK dev <https://github.com/PDOK/lighttpd-docker/issues>"
 
-RUN useradd --no-log-init -U -r www
 
 COPY --from=builder /usr/local/sbin /usr/local/sbin
 COPY --from=builder /usr/local/lib /usr/local/lib
@@ -62,10 +61,8 @@ RUN apt-get -y update \
 # allow non root user to bind to port 80 with lighttpd binary
 RUN setcap 'cap_net_bind_service=+ep' /usr/local/sbin/lighttpd
 
-RUN mkdir -p /var/cache/lighttpd/compress && \
-  chown -R www:www /var/cache/lighttpd/compress
+RUN mkdir -p /var/cache/lighttpd/compress
 
-USER www
 
 ENV DEBUG 0
 ENV MIN_PROCS 1
