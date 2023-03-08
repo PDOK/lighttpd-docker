@@ -6,7 +6,7 @@ LABEL maintainer="PDOK dev <https://github.com/PDOK/lighttpd-docker/issues>"
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ Europe/Amsterdam
-ENV LIGHTTPD_VERSION=1.4.65
+ENV LIGHTTPD_VERSION=1.4.67
 
 # https://redmine.lighttpd.net/projects/lighttpd/wiki/DevelGit
 # hadolint ignore=DL3008
@@ -42,6 +42,7 @@ RUN ./autogen.sh \
 FROM debian:buster-slim as service
 LABEL maintainer="PDOK dev <https://github.com/PDOK/lighttpd-docker/issues>"
 
+RUN useradd --no-log-init -U -r www
 
 COPY --from=builder /usr/local/sbin /usr/local/sbin
 COPY --from=builder /usr/local/lib /usr/local/lib
@@ -62,8 +63,10 @@ RUN apt-get -y update \
 RUN setcap 'cap_net_bind_service=+ep' /usr/local/sbin/lighttpd
 
 # hadolint ignore=DL3059
-RUN mkdir -p /var/cache/lighttpd/compress
+RUN mkdir -p /var/cache/lighttpd/compress && \
+  chown -R www:www /var/cache/lighttpd/compress
 
+USER www
 
 ENV DEBUG 0
 ENV MIN_PROCS 1
