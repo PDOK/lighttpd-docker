@@ -24,8 +24,7 @@ The image comes with a default, overridable [`lighttdp.conf`](config/lighttpd.co
 - `mod_expire`: Sets Cache-Control headers on files with hashed filenames like `index.561ecd9f.css`
 - `mod_deflate`: Output compression on html, text, css, javascript and xml files, the compressed files are stored in a cache directory
 
-When running this image on Kubernetes and serving out very large files that will be compressed, ensure that the cache directory has it's own volume mount. For most webapps this will not be necessary. 
-
+When running this image on Kubernetes and serving out very large files that will be compressed, ensure that the cache directory has it's own volume mount. For most webapps this will not be necessary.
 
 ## What will it do
 

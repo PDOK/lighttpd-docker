@@ -1,7 +1,7 @@
-# using tag debian:buster-slim to automatically receive updates on buster
-# assuming debian:buster-slim is stable enough, so no breaking changes
+# using tag debian:bullseye-slim to automatically receive updates on bullseye
+# assuming debian:bullseye-slim is stable enough, so no breaking changes
 
-FROM debian:buster-slim as builder
+FROM debian:bullseye-slim as builder
 LABEL maintainer="PDOK dev <https://github.com/PDOK/lighttpd-docker/issues>"
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -17,7 +17,7 @@ RUN apt-get -y update \
   ca-certificates \
   git \
   libbz2-dev \
-  liblua5.2-dev \
+  liblua5.4-dev \
   libpcre2-dev \
   libssl-dev \
   libtool \
@@ -39,7 +39,7 @@ RUN ./autogen.sh \
   && make \
   && make install
 
-FROM debian:buster-slim as service
+FROM debian:bullseye-slim as service
 LABEL maintainer="PDOK dev <https://github.com/PDOK/lighttpd-docker/issues>"
 
 RUN useradd --no-log-init -U -r www
@@ -55,7 +55,7 @@ RUN apt-get -y update \
   && apt-get install -y --no-install-recommends \
   ca-certificates \
   libcap2-bin \
-  liblua5.2-0 \
+  liblua5.4-0 \
   wget \
   && rm -rf /var/lib/apt/lists/*
 
