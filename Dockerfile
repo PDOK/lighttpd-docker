@@ -1,7 +1,7 @@
 # using tag debian:buster-slim to automatically receive updates on buster
 # assuming debian:buster-slim is stable enough, so no breaking changes
 
-FROM debian:buster-slim as builder
+FROM debian:bookworm as builder
 LABEL maintainer="PDOK dev <https://github.com/PDOK/lighttpd-docker/issues>"
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -39,7 +39,7 @@ RUN ./autogen.sh \
   && make \
   && make install
 
-FROM debian:buster-slim as service
+FROM debian:bookworm as service
 LABEL maintainer="PDOK dev <https://github.com/PDOK/lighttpd-docker/issues>"
 
 RUN useradd --no-log-init -U -r www
