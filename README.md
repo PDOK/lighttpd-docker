@@ -11,7 +11,7 @@ A simple [lighttpd](https://www.lighttpd.net/) image that doesn't use an entrypo
 
 ```docker
 docker build -t pdok/lighttpd .
-docker run --rm -d -v `pwd`/www/:/var/www -p 80:80 --name lighttpd-example pdok/lighttpd
+docker run --rm -d -v "$PWD/www/:/var/www" -p 80:80 --name lighttpd-example pdok/lighttpd
 docker stop lighttpd-example
 ```
 
@@ -59,7 +59,7 @@ This image can be run straight from the commandline. Both the default configurat
 - override default asset directory by mounting a directory with assets to serve at `/var/www` in the container
 
 ```sh
-docker run --rm -p 80:80 --name lighttpd-example -v `pwd`/config:/srv/lighttpd -v `pwd`/www:/var/www pdok/lighttpd
+docker run --rm -p 80:80 --name lighttpd-example -v "$PWD/config:/srv/lighttpd" -v "$PWD/www:/var/www" pdok/lighttpd
 ```
 
 Running the example above will create a service on the url <http://localhost/>
